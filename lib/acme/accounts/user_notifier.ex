@@ -8,7 +8,7 @@ defmodule Acme.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Authentication", "acme@Acmeusers.com"})
+      |> from({"Authentication", "accounts@acme.com"})
       |> subject(subject)
       |> text_body(body)
 
