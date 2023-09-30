@@ -480,7 +480,12 @@ defmodule Acme.AccountsTest do
     end
 
     test "create_role/1 with valid data creates a role" do
-      valid_attrs = %{name: "some name"}
+      team = team_fixture()
+
+      valid_attrs = %{
+        team_id: team.id,
+        name: "some name"
+      }
 
       assert {:ok, %Role{} = role} = Accounts.create_role(valid_attrs)
       assert role.name == "some name"
@@ -534,7 +539,11 @@ defmodule Acme.AccountsTest do
     end
 
     test "create_permission/1 with valid data creates a permission" do
-      valid_attrs = %{name: "some name"}
+      team = team_fixture()
+      valid_attrs = %{
+        team_id: team.id,
+        name: "some name"
+      }
 
       assert {:ok, %Permission{} = permission} = Accounts.create_permission(valid_attrs)
       assert permission.name == "some name"
@@ -548,7 +557,9 @@ defmodule Acme.AccountsTest do
       permission = permission_fixture()
       update_attrs = %{name: "some updated name"}
 
-      assert {:ok, %Permission{} = permission} = Accounts.update_permission(permission, update_attrs)
+      assert {:ok, %Permission{} = permission} =
+               Accounts.update_permission(permission, update_attrs)
+
       assert permission.name == "some updated name"
     end
 
@@ -588,26 +599,19 @@ defmodule Acme.AccountsTest do
     end
 
     test "create_membership/1 with valid data creates a membership" do
-      valid_attrs = %{}
+      user = user_fixture()
+      team = team_fixture()
+
+      valid_attrs = %{
+        user_id: user.id,
+        team_id: team.id,
+      }
 
       assert {:ok, %Membership{} = membership} = Accounts.create_membership(valid_attrs)
     end
 
     test "create_membership/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_membership(@invalid_attrs)
-    end
-
-    test "update_membership/2 with valid data updates the membership" do
-      membership = membership_fixture()
-      update_attrs = %{}
-
-      assert {:ok, %Membership{} = membership} = Accounts.update_membership(membership, update_attrs)
-    end
-
-    test "update_membership/2 with invalid data returns error changeset" do
-      membership = membership_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_membership(membership, @invalid_attrs)
-      assert membership == Accounts.get_membership!(membership.id)
     end
 
     test "delete_membership/1 deletes the membership" do
@@ -640,32 +644,29 @@ defmodule Acme.AccountsTest do
     end
 
     test "create_membership_role/1 with valid data creates a membership_role" do
-      valid_attrs = %{}
+      membership = membership_fixture()
+      role = role_fixture()
 
-      assert {:ok, %MembershipRole{} = membership_role} = Accounts.create_membership_role(valid_attrs)
+      valid_attrs = %{
+        membership_id: membership.id,
+        role_id: role.id,
+      }
+
+      assert {:ok, %MembershipRole{} = membership_role} =
+               Accounts.create_membership_role(valid_attrs)
     end
 
     test "create_membership_role/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_membership_role(@invalid_attrs)
     end
 
-    test "update_membership_role/2 with valid data updates the membership_role" do
-      membership_role = membership_role_fixture()
-      update_attrs = %{}
-
-      assert {:ok, %MembershipRole{} = membership_role} = Accounts.update_membership_role(membership_role, update_attrs)
-    end
-
-    test "update_membership_role/2 with invalid data returns error changeset" do
-      membership_role = membership_role_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_membership_role(membership_role, @invalid_attrs)
-      assert membership_role == Accounts.get_membership_role!(membership_role.id)
-    end
-
     test "delete_membership_role/1 deletes the membership_role" do
       membership_role = membership_role_fixture()
       assert {:ok, %MembershipRole{}} = Accounts.delete_membership_role(membership_role)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_membership_role!(membership_role.id) end
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Accounts.get_membership_role!(membership_role.id)
+      end
     end
 
     test "change_membership_role/1 returns a membership_role changeset" do
@@ -692,32 +693,29 @@ defmodule Acme.AccountsTest do
     end
 
     test "create_role_permission/1 with valid data creates a role_permission" do
-      valid_attrs = %{}
+      role = role_fixture()
+      permission = permission_fixture()
+        
+      valid_attrs = %{
+        role_id: role.id,
+        permission_id: permission.id,
+      }
 
-      assert {:ok, %RolePermission{} = role_permission} = Accounts.create_role_permission(valid_attrs)
+      assert {:ok, %RolePermission{} = role_permission} =
+               Accounts.create_role_permission(valid_attrs)
     end
 
     test "create_role_permission/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_role_permission(@invalid_attrs)
     end
 
-    test "update_role_permission/2 with valid data updates the role_permission" do
-      role_permission = role_permission_fixture()
-      update_attrs = %{}
-
-      assert {:ok, %RolePermission{} = role_permission} = Accounts.update_role_permission(role_permission, update_attrs)
-    end
-
-    test "update_role_permission/2 with invalid data returns error changeset" do
-      role_permission = role_permission_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_role_permission(role_permission, @invalid_attrs)
-      assert role_permission == Accounts.get_role_permission!(role_permission.id)
-    end
-
     test "delete_role_permission/1 deletes the role_permission" do
       role_permission = role_permission_fixture()
       assert {:ok, %RolePermission{}} = Accounts.delete_role_permission(role_permission)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_role_permission!(role_permission.id) end
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Accounts.get_role_permission!(role_permission.id)
+      end
     end
 
     test "change_role_permission/1 returns a role_permission changeset" do

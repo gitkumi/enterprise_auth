@@ -22,17 +22,17 @@ defmodule AcmeWeb.Router do
 
     post "/users/reset_password", UserResetPasswordController, :create
     put "/users/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/api", AcmeWeb do
+    pipe_through [:api, :auth]
 
     resources "/teams", TeamController, except: [:new, :edit]
     resources "/roles", RoleController, except: [:new, :edit]
     resources "/permissions", PermissionController, except: [:new, :edit]
     resources "/role_permissions", RolePermissionController, except: [:new, :edit, :update]
-    resources "/memberships", MembershipController, except: [:new, :edit]
+    resources "/memberships", MembershipController, except: [:new, :edit, :update]
     resources "/membership_roles", MembershipRoleController, except: [:new, :edit, :update]
-  end
-
-  scope "/api", AcmeWeb do
-    pipe_through [:api, :auth]
 
     get "/users/me", UserMeController, :show
     put "/users/settings", UserSettingsController, :update

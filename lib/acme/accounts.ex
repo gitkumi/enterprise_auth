@@ -646,24 +646,6 @@ defmodule Acme.Accounts do
   end
 
   @doc """
-  Updates a membership.
-
-  ## Examples
-
-      iex> update_membership(membership, %{field: new_value})
-      {:ok, %Membership{}}
-
-      iex> update_membership(membership, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_membership(%Membership{} = membership, attrs) do
-    membership
-    |> Membership.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a membership.
 
   ## Examples
@@ -742,24 +724,6 @@ defmodule Acme.Accounts do
   end
 
   @doc """
-  Updates a membership_role.
-
-  ## Examples
-
-      iex> update_membership_role(membership_role, %{field: new_value})
-      {:ok, %MembershipRole{}}
-
-      iex> update_membership_role(membership_role, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_membership_role(%MembershipRole{} = membership_role, attrs) do
-    membership_role
-    |> MembershipRole.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a membership_role.
 
   ## Examples
@@ -835,24 +799,6 @@ defmodule Acme.Accounts do
     %RolePermission{}
     |> RolePermission.changeset(attrs)
     |> Repo.insert()
-  end
-
-  @doc """
-  Updates a role_permission.
-
-  ## Examples
-
-      iex> update_role_permission(role_permission, %{field: new_value})
-      {:ok, %RolePermission{}}
-
-      iex> update_role_permission(role_permission, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_role_permission(%RolePermission{} = role_permission, attrs) do
-    role_permission
-    |> RolePermission.changeset(attrs)
-    |> Repo.update()
   end
 
   @doc """

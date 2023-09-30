@@ -6,8 +6,8 @@ defmodule Acme.Accounts.RolePermission do
   @foreign_key_type :binary_id
   schema "role_permissions" do
 
-    field :role_id, :binary_id
-    field :permission_id, :binary_id
+    belongs_to :role, Acme.Accounts.Role, type: :binary_id
+    belongs_to :permission, Acme.Accounts.Permission, type: :binary_id
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule Acme.Accounts.RolePermission do
   @doc false
   def changeset(role_permission, attrs) do
     role_permission
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:role_id, :permission_id])
+    |> validate_required([:role_id, :permission_id])
   end
 end

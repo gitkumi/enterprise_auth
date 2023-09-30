@@ -25,14 +25,6 @@ defmodule AcmeWeb.MembershipRoleController do
     render(conn, :show, membership_role: membership_role)
   end
 
-  def update(conn, %{"id" => id, "membership_role" => membership_role_params}) do
-    membership_role = Accounts.get_membership_role!(id)
-
-    with {:ok, %MembershipRole{} = membership_role} <- Accounts.update_membership_role(membership_role, membership_role_params) do
-      render(conn, :show, membership_role: membership_role)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     membership_role = Accounts.get_membership_role!(id)
 

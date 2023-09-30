@@ -3,18 +3,24 @@ defmodule AcmeWeb.TeamControllerTest do
 
   import Acme.AccountsFixtures
 
+  alias Acme.Guardian
   alias Acme.Accounts.Team
 
-  @create_attrs %{
-    name: "some name"
-  }
   @update_attrs %{
     name: "some updated name"
   }
   @invalid_attrs %{name: nil}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    user = user_fixture()
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+    conn =
+      conn
+      |> put_req_header("accept", "application/json")
+      |> put_req_header("authorization", "Bearer #{token}")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
@@ -26,7 +32,11 @@ defmodule AcmeWeb.TeamControllerTest do
 
   describe "create team" do
     test "renders team when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/teams", team: @create_attrs)
+      params = %{
+        name: "some name"
+      }
+
+      conn = post(conn, ~p"/api/teams", team: params)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/teams/#{id}")

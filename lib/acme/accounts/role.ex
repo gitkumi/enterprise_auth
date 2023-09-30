@@ -6,7 +6,7 @@ defmodule Acme.Accounts.Role do
   @foreign_key_type :binary_id
   schema "roles" do
     field :name, :string
-    field :team_id, :binary_id
+    belongs_to :team, Acme.Accounts.Team, type: :binary_id
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule Acme.Accounts.Role do
   @doc false
   def changeset(role, attrs) do
     role
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :team_id])
+    |> validate_required([:name, :team_id])
   end
 end

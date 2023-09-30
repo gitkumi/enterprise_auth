@@ -6,8 +6,8 @@ defmodule Acme.Accounts.Membership do
   @foreign_key_type :binary_id
   schema "memberships" do
 
-    field :user_id, :binary_id
-    field :team_id, :binary_id
+    belongs_to :user, Acme.Accounts.User, type: :binary_id
+    belongs_to :team, Acme.Accounts.Team, type: :binary_id
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule Acme.Accounts.Membership do
   @doc false
   def changeset(membership, attrs) do
     membership
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:user_id, :team_id])
+    |> validate_required([:user_id, :team_id])
   end
 end

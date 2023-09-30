@@ -6,8 +6,8 @@ defmodule Acme.Accounts.MembershipRole do
   @foreign_key_type :binary_id
   schema "membership_roles" do
 
-    field :membership_id, :binary_id
-    field :role_id, :binary_id
+    belongs_to :membership, Acme.Accounts.Membership, type: :binary_id
+    belongs_to :role, Acme.Accounts.Role, type: :binary_id
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule Acme.Accounts.MembershipRole do
   @doc false
   def changeset(membership_role, attrs) do
     membership_role
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:membership_id, :role_id])
+    |> validate_required([:membership_id, :role_id])
   end
 end

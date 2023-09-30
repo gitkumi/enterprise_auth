@@ -25,14 +25,6 @@ defmodule AcmeWeb.MembershipController do
     render(conn, :show, membership: membership)
   end
 
-  def update(conn, %{"id" => id, "membership" => membership_params}) do
-    membership = Accounts.get_membership!(id)
-
-    with {:ok, %Membership{} = membership} <- Accounts.update_membership(membership, membership_params) do
-      render(conn, :show, membership: membership)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     membership = Accounts.get_membership!(id)
 

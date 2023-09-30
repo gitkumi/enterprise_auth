@@ -3,18 +3,19 @@ defmodule AcmeWeb.MembershipControllerTest do
 
   import Acme.AccountsFixtures
 
+  alias Acme.Guardian
   alias Acme.Accounts.Membership
 
-  @create_attrs %{
-
-  }
-  @update_attrs %{
-
-  }
-  @invalid_attrs %{}
-
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    user = user_fixture()
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+    conn =
+      conn
+      |> put_req_header("accept", "application/json")
+      |> put_req_header("authorization", "Bearer #{token}")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
@@ -26,7 +27,15 @@ defmodule AcmeWeb.MembershipControllerTest do
 
   describe "create membership" do
     test "renders membership when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/memberships", membership: @create_attrs)
+      user = user_fixture()
+      team = team_fixture()
+
+      params = %{
+        user_id: user.id,
+        team_id: team.id
+      }
+
+      conn = post(conn, ~p"/api/memberships", membership: params)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/memberships/#{id}")
@@ -37,27 +46,7 @@ defmodule AcmeWeb.MembershipControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, ~p"/api/memberships", membership: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update membership" do
-    setup [:create_membership]
-
-    test "renders membership when data is valid", %{conn: conn, membership: %Membership{id: id} = membership} do
-      conn = put(conn, ~p"/api/memberships/#{membership}", membership: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, ~p"/api/memberships/#{id}")
-
-      assert %{
-               "id" => ^id
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, membership: membership} do
-      conn = put(conn, ~p"/api/memberships/#{membership}", membership: @invalid_attrs)
+      conn = post(conn, ~p"/api/memberships", membership: %{})
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

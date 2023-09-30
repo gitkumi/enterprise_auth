@@ -25,14 +25,6 @@ defmodule AcmeWeb.RolePermissionController do
     render(conn, :show, role_permission: role_permission)
   end
 
-  def update(conn, %{"id" => id, "role_permission" => role_permission_params}) do
-    role_permission = Accounts.get_role_permission!(id)
-
-    with {:ok, %RolePermission{} = role_permission} <- Accounts.update_role_permission(role_permission, role_permission_params) do
-      render(conn, :show, role_permission: role_permission)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     role_permission = Accounts.get_role_permission!(id)
 

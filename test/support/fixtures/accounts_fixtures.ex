@@ -47,9 +47,12 @@ defmodule Acme.AccountsFixtures do
   Generate a role.
   """
   def role_fixture(attrs \\ %{}) do
+    team = team_fixture()
+
     {:ok, role} =
       attrs
       |> Enum.into(%{
+        team_id: team.id,
         name: "some name"
       })
       |> Acme.Accounts.create_role()
@@ -61,9 +64,12 @@ defmodule Acme.AccountsFixtures do
   Generate a permission.
   """
   def permission_fixture(attrs \\ %{}) do
+    team = team_fixture()
+
     {:ok, permission} =
       attrs
       |> Enum.into(%{
+        team_id: team.id,
         name: "some name"
       })
       |> Acme.Accounts.create_permission()
@@ -75,10 +81,14 @@ defmodule Acme.AccountsFixtures do
   Generate a membership.
   """
   def membership_fixture(attrs \\ %{}) do
+    team = team_fixture()
+    user = user_fixture()
+
     {:ok, membership} =
       attrs
       |> Enum.into(%{
-
+        team_id: team.id,
+        user_id: user.id,
       })
       |> Acme.Accounts.create_membership()
 
@@ -89,10 +99,14 @@ defmodule Acme.AccountsFixtures do
   Generate a membership_role.
   """
   def membership_role_fixture(attrs \\ %{}) do
+    membership = membership_fixture()
+    role = role_fixture()
+
     {:ok, membership_role} =
       attrs
       |> Enum.into(%{
-
+        membership_id: membership.id,
+        role_id: role.id,
       })
       |> Acme.Accounts.create_membership_role()
 
@@ -103,10 +117,14 @@ defmodule Acme.AccountsFixtures do
   Generate a role_permission.
   """
   def role_permission_fixture(attrs \\ %{}) do
+    role = role_fixture()
+    permission = permission_fixture()
+
     {:ok, role_permission} =
       attrs
       |> Enum.into(%{
-
+        role_id: role.id,
+        permission_id: permission.id,
       })
       |> Acme.Accounts.create_role_permission()
 

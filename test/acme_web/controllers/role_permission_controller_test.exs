@@ -3,18 +3,21 @@ defmodule AcmeWeb.RolePermissionControllerTest do
 
   import Acme.AccountsFixtures
 
+  alias Acme.Guardian
   alias Acme.Accounts.RolePermission
 
-  @create_attrs %{
-
-  }
-  @update_attrs %{
-
-  }
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    user = user_fixture()
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+    conn =
+      conn
+      |> put_req_header("accept", "application/json")
+      |> put_req_header("authorization", "Bearer #{token}")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
@@ -26,7 +29,15 @@ defmodule AcmeWeb.RolePermissionControllerTest do
 
   describe "create role_permission" do
     test "renders role_permission when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/role_permissions", role_permission: @create_attrs)
+      role = role_fixture()
+      permission = permission_fixture()
+
+      params = %{
+        role_id: role.id,
+        permission_id: permission.id,
+      }
+
+      conn = post(conn, ~p"/api/role_permissions", role_permission: params)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/role_permissions/#{id}")
@@ -38,26 +49,6 @@ defmodule AcmeWeb.RolePermissionControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, ~p"/api/role_permissions", role_permission: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update role_permission" do
-    setup [:create_role_permission]
-
-    test "renders role_permission when data is valid", %{conn: conn, role_permission: %RolePermission{id: id} = role_permission} do
-      conn = put(conn, ~p"/api/role_permissions/#{role_permission}", role_permission: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, ~p"/api/role_permissions/#{id}")
-
-      assert %{
-               "id" => ^id
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, role_permission: role_permission} do
-      conn = put(conn, ~p"/api/role_permissions/#{role_permission}", role_permission: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

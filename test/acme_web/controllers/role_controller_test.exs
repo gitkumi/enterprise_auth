@@ -3,18 +3,24 @@ defmodule AcmeWeb.RoleControllerTest do
 
   import Acme.AccountsFixtures
 
+  alias Acme.Guardian
   alias Acme.Accounts.Role
 
-  @create_attrs %{
-    name: "some name"
-  }
   @update_attrs %{
     name: "some updated name"
   }
   @invalid_attrs %{name: nil}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    user = user_fixture()
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+    conn =
+      conn
+      |> put_req_header("accept", "application/json")
+      |> put_req_header("authorization", "Bearer #{token}")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
@@ -26,7 +32,14 @@ defmodule AcmeWeb.RoleControllerTest do
 
   describe "create role" do
     test "renders role when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/roles", role: @create_attrs)
+      team = team_fixture()
+
+      params = %{
+        team_id: team.id,
+        name: "some name"
+      }
+
+      conn = post(conn, ~p"/api/roles", role: params)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/roles/#{id}")
