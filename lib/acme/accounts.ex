@@ -307,4 +307,580 @@ defmodule Acme.Accounts do
       _ -> nil
     end
   end
+
+  alias Acme.Accounts.Team
+
+  @doc """
+  Returns the list of teams.
+
+  ## Examples
+
+      iex> list_teams()
+      [%Team{}, ...]
+
+  """
+  def list_teams do
+    Repo.all(Team)
+  end
+
+  @doc """
+  Gets a single team.
+
+  Raises `Ecto.NoResultsError` if the Team does not exist.
+
+  ## Examples
+
+      iex> get_team!(123)
+      %Team{}
+
+      iex> get_team!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_team!(id), do: Repo.get!(Team, id)
+
+  @doc """
+  Creates a team.
+
+  ## Examples
+
+      iex> create_team(%{field: value})
+      {:ok, %Team{}}
+
+      iex> create_team(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_team(attrs \\ %{}) do
+    %Team{}
+    |> Team.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a team.
+
+  ## Examples
+
+      iex> update_team(team, %{field: new_value})
+      {:ok, %Team{}}
+
+      iex> update_team(team, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_team(%Team{} = team, attrs) do
+    team
+    |> Team.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a team.
+
+  ## Examples
+
+      iex> delete_team(team)
+      {:ok, %Team{}}
+
+      iex> delete_team(team)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_team(%Team{} = team) do
+    Repo.delete(team)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking team changes.
+
+  ## Examples
+
+      iex> change_team(team)
+      %Ecto.Changeset{data: %Team{}}
+
+  """
+  def change_team(%Team{} = team, attrs \\ %{}) do
+    Team.changeset(team, attrs)
+  end
+
+  alias Acme.Accounts.Role
+
+  @doc """
+  Returns the list of roles.
+
+  ## Examples
+
+      iex> list_roles()
+      [%Role{}, ...]
+
+  """
+  def list_roles do
+    Repo.all(Role)
+  end
+
+  @doc """
+  Gets a single role.
+
+  Raises `Ecto.NoResultsError` if the Role does not exist.
+
+  ## Examples
+
+      iex> get_role!(123)
+      %Role{}
+
+      iex> get_role!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_role!(id), do: Repo.get!(Role, id)
+
+  @doc """
+  Creates a role.
+
+  ## Examples
+
+      iex> create_role(%{field: value})
+      {:ok, %Role{}}
+
+      iex> create_role(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_role(attrs \\ %{}) do
+    %Role{}
+    |> Role.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a role.
+
+  ## Examples
+
+      iex> update_role(role, %{field: new_value})
+      {:ok, %Role{}}
+
+      iex> update_role(role, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_role(%Role{} = role, attrs) do
+    role
+    |> Role.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a role.
+
+  ## Examples
+
+      iex> delete_role(role)
+      {:ok, %Role{}}
+
+      iex> delete_role(role)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_role(%Role{} = role) do
+    Repo.delete(role)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking role changes.
+
+  ## Examples
+
+      iex> change_role(role)
+      %Ecto.Changeset{data: %Role{}}
+
+  """
+  def change_role(%Role{} = role, attrs \\ %{}) do
+    Role.changeset(role, attrs)
+  end
+
+  alias Acme.Accounts.Permission
+
+  @doc """
+  Returns the list of permissions.
+
+  ## Examples
+
+      iex> list_permissions()
+      [%Permission{}, ...]
+
+  """
+  def list_permissions do
+    Repo.all(Permission)
+  end
+
+  @doc """
+  Gets a single permission.
+
+  Raises `Ecto.NoResultsError` if the Permission does not exist.
+
+  ## Examples
+
+      iex> get_permission!(123)
+      %Permission{}
+
+      iex> get_permission!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_permission!(id), do: Repo.get!(Permission, id)
+
+  @doc """
+  Creates a permission.
+
+  ## Examples
+
+      iex> create_permission(%{field: value})
+      {:ok, %Permission{}}
+
+      iex> create_permission(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_permission(attrs \\ %{}) do
+    %Permission{}
+    |> Permission.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a permission.
+
+  ## Examples
+
+      iex> update_permission(permission, %{field: new_value})
+      {:ok, %Permission{}}
+
+      iex> update_permission(permission, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_permission(%Permission{} = permission, attrs) do
+    permission
+    |> Permission.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a permission.
+
+  ## Examples
+
+      iex> delete_permission(permission)
+      {:ok, %Permission{}}
+
+      iex> delete_permission(permission)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_permission(%Permission{} = permission) do
+    Repo.delete(permission)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking permission changes.
+
+  ## Examples
+
+      iex> change_permission(permission)
+      %Ecto.Changeset{data: %Permission{}}
+
+  """
+  def change_permission(%Permission{} = permission, attrs \\ %{}) do
+    Permission.changeset(permission, attrs)
+  end
+
+  alias Acme.Accounts.Membership
+
+  @doc """
+  Returns the list of memberships.
+
+  ## Examples
+
+      iex> list_memberships()
+      [%Membership{}, ...]
+
+  """
+  def list_memberships do
+    Repo.all(Membership)
+  end
+
+  @doc """
+  Gets a single membership.
+
+  Raises `Ecto.NoResultsError` if the Membership does not exist.
+
+  ## Examples
+
+      iex> get_membership!(123)
+      %Membership{}
+
+      iex> get_membership!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_membership!(id), do: Repo.get!(Membership, id)
+
+  @doc """
+  Creates a membership.
+
+  ## Examples
+
+      iex> create_membership(%{field: value})
+      {:ok, %Membership{}}
+
+      iex> create_membership(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_membership(attrs \\ %{}) do
+    %Membership{}
+    |> Membership.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a membership.
+
+  ## Examples
+
+      iex> update_membership(membership, %{field: new_value})
+      {:ok, %Membership{}}
+
+      iex> update_membership(membership, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_membership(%Membership{} = membership, attrs) do
+    membership
+    |> Membership.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a membership.
+
+  ## Examples
+
+      iex> delete_membership(membership)
+      {:ok, %Membership{}}
+
+      iex> delete_membership(membership)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_membership(%Membership{} = membership) do
+    Repo.delete(membership)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking membership changes.
+
+  ## Examples
+
+      iex> change_membership(membership)
+      %Ecto.Changeset{data: %Membership{}}
+
+  """
+  def change_membership(%Membership{} = membership, attrs \\ %{}) do
+    Membership.changeset(membership, attrs)
+  end
+
+  alias Acme.Accounts.MembershipRole
+
+  @doc """
+  Returns the list of membership_roles.
+
+  ## Examples
+
+      iex> list_membership_roles()
+      [%MembershipRole{}, ...]
+
+  """
+  def list_membership_roles do
+    Repo.all(MembershipRole)
+  end
+
+  @doc """
+  Gets a single membership_role.
+
+  Raises `Ecto.NoResultsError` if the Membership role does not exist.
+
+  ## Examples
+
+      iex> get_membership_role!(123)
+      %MembershipRole{}
+
+      iex> get_membership_role!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_membership_role!(id), do: Repo.get!(MembershipRole, id)
+
+  @doc """
+  Creates a membership_role.
+
+  ## Examples
+
+      iex> create_membership_role(%{field: value})
+      {:ok, %MembershipRole{}}
+
+      iex> create_membership_role(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_membership_role(attrs \\ %{}) do
+    %MembershipRole{}
+    |> MembershipRole.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a membership_role.
+
+  ## Examples
+
+      iex> update_membership_role(membership_role, %{field: new_value})
+      {:ok, %MembershipRole{}}
+
+      iex> update_membership_role(membership_role, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_membership_role(%MembershipRole{} = membership_role, attrs) do
+    membership_role
+    |> MembershipRole.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a membership_role.
+
+  ## Examples
+
+      iex> delete_membership_role(membership_role)
+      {:ok, %MembershipRole{}}
+
+      iex> delete_membership_role(membership_role)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_membership_role(%MembershipRole{} = membership_role) do
+    Repo.delete(membership_role)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking membership_role changes.
+
+  ## Examples
+
+      iex> change_membership_role(membership_role)
+      %Ecto.Changeset{data: %MembershipRole{}}
+
+  """
+  def change_membership_role(%MembershipRole{} = membership_role, attrs \\ %{}) do
+    MembershipRole.changeset(membership_role, attrs)
+  end
+
+  alias Acme.Accounts.RolePermission
+
+  @doc """
+  Returns the list of role_permissions.
+
+  ## Examples
+
+      iex> list_role_permissions()
+      [%RolePermission{}, ...]
+
+  """
+  def list_role_permissions do
+    Repo.all(RolePermission)
+  end
+
+  @doc """
+  Gets a single role_permission.
+
+  Raises `Ecto.NoResultsError` if the Role permission does not exist.
+
+  ## Examples
+
+      iex> get_role_permission!(123)
+      %RolePermission{}
+
+      iex> get_role_permission!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_role_permission!(id), do: Repo.get!(RolePermission, id)
+
+  @doc """
+  Creates a role_permission.
+
+  ## Examples
+
+      iex> create_role_permission(%{field: value})
+      {:ok, %RolePermission{}}
+
+      iex> create_role_permission(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_role_permission(attrs \\ %{}) do
+    %RolePermission{}
+    |> RolePermission.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a role_permission.
+
+  ## Examples
+
+      iex> update_role_permission(role_permission, %{field: new_value})
+      {:ok, %RolePermission{}}
+
+      iex> update_role_permission(role_permission, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_role_permission(%RolePermission{} = role_permission, attrs) do
+    role_permission
+    |> RolePermission.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a role_permission.
+
+  ## Examples
+
+      iex> delete_role_permission(role_permission)
+      {:ok, %RolePermission{}}
+
+      iex> delete_role_permission(role_permission)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_role_permission(%RolePermission{} = role_permission) do
+    Repo.delete(role_permission)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking role_permission changes.
+
+  ## Examples
+
+      iex> change_role_permission(role_permission)
+      %Ecto.Changeset{data: %RolePermission{}}
+
+  """
+  def change_role_permission(%RolePermission{} = role_permission, attrs \\ %{}) do
+    RolePermission.changeset(role_permission, attrs)
+  end
 end
