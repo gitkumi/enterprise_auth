@@ -22,3 +22,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ```sh
 docker container rm postgres && docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
 ```
+
+## Generate
+
+```sh
+mix phx.gen.json Accounts Team teams name:string 
+mix phx.gen.json Accounts Role roles name:string team_id:references:teams 
+mix phx.gen.json Accounts Permission permissions name:string team_id:references:teams
+mix phx.gen.json Accounts RolePermission role_permissions role_id:references:roles permission_id:references:permissions  
+mix phx.gen.json Accounts Membership memberships user_id:references:users team_id:references:teams 
+mix phx.gen.json Accounts MembershipRole membership_roles membership_id:references:memberships role_id:references:roles
+```
