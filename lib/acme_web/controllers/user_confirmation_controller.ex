@@ -3,11 +3,11 @@ defmodule AcmeWeb.UserConfirmationController do
 
   alias Acme.{Accounts}
 
-  def create(conn, %{"user" => %{"email" => email}, "confirmation_url" => confirmation_url}) do
+  def create(conn, %{"user" => %{"email" => email}}) do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_user_confirmation_instructions(
         user,
-        fn token -> String.replace(confirmation_url, "{token}", token) end
+        fn token -> "~p/users/confirm/#{token}" end
       )
     end
 

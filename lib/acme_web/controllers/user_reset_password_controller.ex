@@ -4,11 +4,11 @@ defmodule AcmeWeb.UserResetPasswordController do
   alias AcmeWeb.ChangesetJSON
   alias Acme.Accounts
 
-  def create(conn, %{"user" => %{"email" => email}, "confirmation_url" => confirmation_url}) do
+  def create(conn, %{"user" => %{"email" => email}}) do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_user_reset_password_instructions(
         user,
-        fn token -> String.replace(confirmation_url, "{token}", token) end
+        fn token -> "~p/users/reset_password/#{token}" end
       )
     end
 

@@ -76,8 +76,7 @@ defmodule AcmeWeb.UserSettingsControllerTest do
       "current_password" => "not secure password",
       "user" => %{
         "email" => "newemail@test.com"
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn =

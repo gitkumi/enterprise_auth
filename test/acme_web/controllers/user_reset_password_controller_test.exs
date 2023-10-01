@@ -11,8 +11,7 @@ defmodule AcmeWeb.UserResetPasswordControllerTest do
     payload = %{
       "user" => %{
         "email" => user.email
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn = post(conn, ~p"/api/users/reset_password", payload)
@@ -25,8 +24,7 @@ defmodule AcmeWeb.UserResetPasswordControllerTest do
     payload = %{
       "user" => %{
         "email" => "empty@test.com"
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn = post(conn, ~p"/api/users/reset_password", payload)

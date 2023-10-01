@@ -4,7 +4,7 @@ defmodule AcmeWeb.UserSettingsController do
   alias Acme.Accounts
   alias AcmeWeb.ChangesetJSON
 
-  def update(conn, %{"action" => "update_email", "confirmation_url" => confirmation_url} = params) do
+  def update(conn, %{"action" => "update_email"} = params) do
     %{"current_password" => password, "user" => user_params} = params
     user = conn.private.guardian_default_resource
 
@@ -13,7 +13,7 @@ defmodule AcmeWeb.UserSettingsController do
         Accounts.deliver_user_update_email_instructions(
           applied_user,
           user.email,
-          fn token -> String.replace(confirmation_url, "{token}", token) end
+          fn token -> "~p/users/settings/confirm_email/#{token}" end
         )
 
         conn

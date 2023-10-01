@@ -12,8 +12,7 @@ defmodule AcmeWeb.UserRegistrationControllerTest do
       "user" => %{
         "email" => "new@test.com",
         "password" => "not secure password"
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn = post(conn, ~p"/api/users/register", payload)
@@ -25,8 +24,7 @@ defmodule AcmeWeb.UserRegistrationControllerTest do
       "user" => %{
         "email" => user.email,
         "password" => "not secure password"
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn = post(conn, ~p"/api/users/register", payload)

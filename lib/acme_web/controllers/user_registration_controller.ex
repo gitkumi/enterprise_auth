@@ -4,14 +4,14 @@ defmodule AcmeWeb.UserRegistrationController do
   alias AcmeWeb.ChangesetJSON
   alias Acme.{Accounts, Guardian}
 
-  def create(conn, %{"user" => user_params, "confirmation_url" => confirmation_url}) do
+  def create(conn, %{"user" => user_params}) do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
         {:ok, token, _claims} = Guardian.encode_and_sign(user)
 
         Accounts.deliver_user_confirmation_instructions(
           user,
-          fn token -> String.replace(confirmation_url, "{token}", token) end
+          fn token -> "~p/users/confirm/#{token}" end
         )
 
         conn

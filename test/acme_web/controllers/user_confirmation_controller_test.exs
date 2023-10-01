@@ -10,8 +10,7 @@ defmodule AcmeWeb.UserConfirmationControllerTest do
     payload = %{
       "user" => %{
         "email" => user.email
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn = post(conn, ~p"/api/users/confirm", payload)
@@ -28,8 +27,7 @@ defmodule AcmeWeb.UserConfirmationControllerTest do
     payload = %{
       "user" => %{
         "email" => "does not exist"
-      },
-      "confirmation_url" => "localhost:8080/{token}"
+      }
     }
 
     conn = post(conn, ~p"/api/users/confirm", payload)
