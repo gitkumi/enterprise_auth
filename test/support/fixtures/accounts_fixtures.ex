@@ -10,7 +10,9 @@ defmodule Acme.AccountsFixtures do
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
       email: unique_user_email(),
-      password: valid_user_password()
+      password: valid_user_password(),
+      first_name: "Test",
+      last_name: "Test"
     })
   end
 

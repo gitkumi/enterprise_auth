@@ -11,7 +11,9 @@ defmodule AcmeWeb.UserRegistrationControllerTest do
     payload = %{
       "user" => %{
         "email" => "new@test.com",
-        "password" => "not secure password"
+        "password" => "not secure password",
+        "first_name" => "test",
+        "last_name" => "test",
       }
     }
 
