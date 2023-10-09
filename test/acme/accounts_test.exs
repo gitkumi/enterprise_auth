@@ -426,7 +426,8 @@ defmodule Acme.AccountsTest do
     end
 
     test "create_team/1 with valid data creates a team" do
-      valid_attrs = %{name: "some name"}
+      user = user_fixture()
+      valid_attrs = %{name: "some name", owner_id: user.id}
 
       assert {:ok, %Team{} = team} = Accounts.create_team(valid_attrs)
       assert team.name == "some name"

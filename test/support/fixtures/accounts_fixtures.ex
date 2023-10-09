@@ -35,9 +35,12 @@ defmodule Acme.AccountsFixtures do
   Generate a team.
   """
   def team_fixture(attrs \\ %{}) do
+    user = user_fixture()
+
     {:ok, team} =
       attrs
       |> Enum.into(%{
+        owner_id: user.id,
         name: "some name"
       })
       |> Acme.Accounts.create_team()

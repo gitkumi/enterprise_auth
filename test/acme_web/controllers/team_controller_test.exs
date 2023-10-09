@@ -20,7 +20,7 @@ defmodule AcmeWeb.TeamControllerTest do
       |> put_req_header("accept", "application/json")
       |> put_req_header("authorization", "Bearer #{token}")
 
-    {:ok, conn: conn}
+    {:ok, conn: conn, user: user}
   end
 
   describe "index" do
@@ -31,19 +31,23 @@ defmodule AcmeWeb.TeamControllerTest do
   end
 
   describe "create team" do
-    test "renders team when data is valid", %{conn: conn} do
+    test "renders team when data is valid", %{conn: conn, user: user} do
       params = %{
         name: "some name"
       }
 
       conn = post(conn, ~p"/api/teams", team: params)
+
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/teams/#{id}")
 
+      owner_id = user.id
+
       assert %{
                "id" => ^id,
-               "name" => "some name"
+               "owner_id" => ^owner_id,
+               "name" => "some name",
              } = json_response(conn, 200)["data"]
     end
 

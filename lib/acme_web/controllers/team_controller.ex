@@ -12,7 +12,10 @@ defmodule AcmeWeb.TeamController do
   end
 
   def create(conn, %{"team" => team_params}) do
-    with {:ok, %Team{} = team} <- Accounts.create_team(team_params) do
+    user = conn.private.guardian_default_resource
+    params = Map.put(team_params, "owner_id", user.id)
+
+    with {:ok, %Team{} = team} <- Accounts.create_team(params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/teams/#{team}")

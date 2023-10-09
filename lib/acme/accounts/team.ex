@@ -7,13 +7,15 @@ defmodule Acme.Accounts.Team do
   schema "teams" do
     field :name, :string
 
+    belongs_to :owner, Acme.Accounts.User, foreign_key: :owner_id, references: :id, type: :binary_id
+
     timestamps()
   end
 
   @doc false
   def changeset(team, attrs) do
     team
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :owner_id])
+    |> validate_required([:name, :owner_id])
   end
 end

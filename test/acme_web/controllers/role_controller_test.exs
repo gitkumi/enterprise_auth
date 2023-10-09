@@ -20,7 +20,7 @@ defmodule AcmeWeb.RoleControllerTest do
       |> put_req_header("accept", "application/json")
       |> put_req_header("authorization", "Bearer #{token}")
 
-    {:ok, conn: conn}
+    {:ok, conn: conn, user: user}
   end
 
   describe "index" do

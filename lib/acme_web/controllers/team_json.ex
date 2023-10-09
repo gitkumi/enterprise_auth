@@ -18,7 +18,8 @@ defmodule AcmeWeb.TeamJSON do
   defp data(%Team{} = team) do
     %{
       id: team.id,
-      name: team.name
+      name: team.name,
+      owner_id: team.owner_id
     }
   end
 end
