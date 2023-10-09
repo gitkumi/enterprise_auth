@@ -21,6 +21,14 @@ defmodule AcmeWeb.UserMeControllerTest do
       |> put_req_header("authorization", "Bearer #{token}")
       |> get("/api/users/me")
 
-    assert json_response(conn, 200) == %{"user" => %{"id" => user.id, "email" => user.email, "confirmed_at" => user.confirmed_at}}
+    assert json_response(conn, 200) == %{
+             "data" => %{
+               "id" => user.id,
+               "email" => user.email,
+               "confirmed_at" => user.confirmed_at,
+               "first_name" => user.first_name,
+               "last_name" => user.last_name
+             }
+           }
   end
 end
