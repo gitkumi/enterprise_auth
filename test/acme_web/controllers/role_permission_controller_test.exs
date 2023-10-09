@@ -3,8 +3,8 @@ defmodule AcmeWeb.RolePermissionControllerTest do
 
   import Acme.AccountsFixtures
 
-  alias Acme.Guardian
   alias Acme.Accounts.RolePermission
+  alias Acme.Guardian
 
   @invalid_attrs %{}
 
@@ -34,7 +34,7 @@ defmodule AcmeWeb.RolePermissionControllerTest do
 
       params = %{
         role_id: role.id,
-        permission_id: permission.id,
+        permission_id: permission.id
       }
 
       conn = post(conn, ~p"/api/role_permissions", role_permission: params)

@@ -1,6 +1,9 @@
 defmodule Acme.Accounts.UserToken do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Query
+
   alias Acme.Accounts.UserToken
 
   @hash_algorithm :sha256

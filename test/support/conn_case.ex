@@ -20,14 +20,14 @@ defmodule AcmeWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint AcmeWeb.Endpoint
-
       use AcmeWeb, :verified_routes
 
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
       import AcmeWeb.ConnCase
+      import Phoenix.ConnTest
+      import Plug.Conn
+
+      @endpoint AcmeWeb.Endpoint
     end
   end
 

@@ -1,8 +1,8 @@
 defmodule AcmeWeb.UserResetPasswordController do
   use AcmeWeb, :controller
 
-  alias AcmeWeb.ChangesetJSON
   alias Acme.Accounts
+  alias AcmeWeb.ChangesetJSON
 
   def create(conn, %{"user" => %{"email" => email}}) do
     if user = Accounts.get_user_by_email(email) do
@@ -12,11 +12,7 @@ defmodule AcmeWeb.UserResetPasswordController do
       )
     end
 
-    conn
-    |> json(%{
-      message:
-        "If your email is in our system, you will receive instructions to reset your password shortly."
-    })
+    json(conn, %{message: "If your email is in our system, you will receive instructions to reset your password shortly."})
   end
 
   def update(conn, %{"user" => user_params}) do
@@ -33,16 +29,12 @@ defmodule AcmeWeb.UserResetPasswordController do
       user ->
         case Accounts.reset_user_password(user, user_params) do
           {:ok, _} ->
-            conn
-            |> json(%{
-              message: "Password reset successfully."
-            })
+            json(conn, %{message: "Password reset successfully."})
 
           {:error, changeset} ->
             errors = ChangesetJSON.error(%{changeset: changeset})
 
-            conn
-            |> json(errors)
+            json(conn, errors)
         end
     end
   end

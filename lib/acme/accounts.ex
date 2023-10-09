@@ -4,9 +4,25 @@ defmodule Acme.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias Acme.Repo
 
-  alias Acme.Accounts.{User, UserNotifier, UserToken}
+  # {:ok, query} = UserToken.verify_email_token_query(token, "confirm")
+  # user = Repo.one(query)
+  #
+  # dbg(query)
+  # dbg(user)
+
+  ## Reset password
+
+  alias Acme.Accounts.Membership
+  alias Acme.Accounts.MembershipRole
+  alias Acme.Accounts.Permission
+  alias Acme.Accounts.Role
+  alias Acme.Accounts.RolePermission
+  alias Acme.Accounts.Team
+  alias Acme.Accounts.User
+  alias Acme.Accounts.UserNotifier
+  alias Acme.Accounts.UserToken
+  alias Acme.Repo
 
   @doc """
   Returns an `%Ecto.Changeset{}` for changing the user email.
@@ -158,12 +174,6 @@ defmodule Acme.Accounts do
   and the token is deleted.
   """
   def confirm_user(token) do
-    # {:ok, query} = UserToken.verify_email_token_query(token, "confirm")
-    # user = Repo.one(query)
-    #
-    # dbg(query)
-    # dbg(user)
-
     with {:ok, query} <- UserToken.verify_email_token_query(token, "confirm"),
          %User{} = user <- Repo.one(query),
          {:ok, %{user: user}} <- Repo.transaction(confirm_user_multi(user)) do
@@ -178,8 +188,6 @@ defmodule Acme.Accounts do
     |> Ecto.Multi.update(:user, User.confirm_changeset(user))
     |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, ["confirm"]))
   end
-
-  ## Reset password
 
   @doc ~S"""
   Delivers the reset password email to the given user.
@@ -308,8 +316,6 @@ defmodule Acme.Accounts do
     end
   end
 
-  alias Acme.Accounts.Team
-
   @doc """
   Returns the list of teams.
 
@@ -403,8 +409,6 @@ defmodule Acme.Accounts do
   def change_team(%Team{} = team, attrs \\ %{}) do
     Team.changeset(team, attrs)
   end
-
-  alias Acme.Accounts.Role
 
   @doc """
   Returns the list of roles.
@@ -500,8 +504,6 @@ defmodule Acme.Accounts do
     Role.changeset(role, attrs)
   end
 
-  alias Acme.Accounts.Permission
-
   @doc """
   Returns the list of permissions.
 
@@ -596,8 +598,6 @@ defmodule Acme.Accounts do
     Permission.changeset(permission, attrs)
   end
 
-  alias Acme.Accounts.Membership
-
   @doc """
   Returns the list of memberships.
 
@@ -674,8 +674,6 @@ defmodule Acme.Accounts do
     Membership.changeset(membership, attrs)
   end
 
-  alias Acme.Accounts.MembershipRole
-
   @doc """
   Returns the list of membership_roles.
 
@@ -751,8 +749,6 @@ defmodule Acme.Accounts do
   def change_membership_role(%MembershipRole{} = membership_role, attrs \\ %{}) do
     MembershipRole.changeset(membership_role, attrs)
   end
-
-  alias Acme.Accounts.RolePermission
 
   @doc """
   Returns the list of role_permissions.

@@ -1,5 +1,6 @@
 defmodule AcmeWeb.UserConfirmationControllerTest do
   use AcmeWeb.ConnCase, async: true
+
   import Acme.AccountsFixtures
 
   setup do

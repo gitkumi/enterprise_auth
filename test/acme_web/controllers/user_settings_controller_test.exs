@@ -2,7 +2,8 @@ defmodule AcmeWeb.UserSettingsControllerTest do
   use AcmeWeb.ConnCase, async: true
 
   import Acme.AccountsFixtures
-  alias Acme.{Guardian}
+
+  alias Acme.Guardian
 
   setup do
     %{user: user_fixture()}
@@ -25,8 +26,7 @@ defmodule AcmeWeb.UserSettingsControllerTest do
       |> put(~p"/api/users/settings", payload)
 
     assert json_response(conn, 200) == %{
-             "message" =>
-               "Password updated successfully."
+             "message" => "Password updated successfully."
            }
   end
 
@@ -85,8 +85,7 @@ defmodule AcmeWeb.UserSettingsControllerTest do
       |> put(~p"/api/users/settings", payload)
 
     assert json_response(conn, 200) == %{
-             "message" =>
-               "A link to confirm your email change has been sent to the new address."
+             "message" => "A link to confirm your email change has been sent to the new address."
            }
 
     # TODO: Test if the link sent to email works properly.

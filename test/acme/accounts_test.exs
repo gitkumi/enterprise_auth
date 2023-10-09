@@ -1,10 +1,11 @@
 defmodule Acme.AccountsTest do
   use Acme.DataCase
 
-  alias Acme.Accounts
-
   import Acme.AccountsFixtures
-  alias Acme.Accounts.{User, UserToken}
+
+  alias Acme.Accounts
+  alias Acme.Accounts.User
+  alias Acme.Accounts.UserToken
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
@@ -30,8 +31,7 @@ defmodule Acme.AccountsTest do
     test "returns the user if the email and password are valid" do
       %{id: id} = user = user_fixture()
 
-      assert %User{id: ^id} =
-               Accounts.get_user_by_email_and_password(user.email, valid_user_password())
+      assert %User{id: ^id} = Accounts.get_user_by_email_and_password(user.email, valid_user_password())
     end
   end
 
@@ -106,8 +106,7 @@ defmodule Acme.AccountsTest do
     end
 
     test "validates email", %{user: user} do
-      {:error, changeset} =
-        Accounts.apply_user_email(user, valid_user_password(), %{email: "not valid"})
+      {:error, changeset} = Accounts.apply_user_email(user, valid_user_password(), %{email: "not valid"})
 
       assert %{email: ["must have the @ sign and no spaces"]} = errors_on(changeset)
     end
@@ -115,8 +114,7 @@ defmodule Acme.AccountsTest do
     test "validates maximum value for email for security", %{user: user} do
       too_long = String.duplicate("db", 100)
 
-      {:error, changeset} =
-        Accounts.apply_user_email(user, valid_user_password(), %{email: too_long})
+      {:error, changeset} = Accounts.apply_user_email(user, valid_user_password(), %{email: too_long})
 
       assert "should be at most 160 character(s)" in errors_on(changeset).email
     end
@@ -131,8 +129,7 @@ defmodule Acme.AccountsTest do
     end
 
     test "validates current password", %{user: user} do
-      {:error, changeset} =
-        Accounts.apply_user_email(user, "invalid", %{email: unique_user_email()})
+      {:error, changeset} = Accounts.apply_user_email(user, "invalid", %{email: unique_user_email()})
 
       assert %{current_password: ["is not valid"]} = errors_on(changeset)
     end
@@ -246,15 +243,13 @@ defmodule Acme.AccountsTest do
     test "validates maximum values for password for security", %{user: user} do
       too_long = String.duplicate("db", 100)
 
-      {:error, changeset} =
-        Accounts.update_user_password(user, valid_user_password(), %{password: too_long})
+      {:error, changeset} = Accounts.update_user_password(user, valid_user_password(), %{password: too_long})
 
       assert "should be at most 72 character(s)" in errors_on(changeset).password
     end
 
     test "validates current password", %{user: user} do
-      {:error, changeset} =
-        Accounts.update_user_password(user, "invalid", %{password: valid_user_password()})
+      {:error, changeset} = Accounts.update_user_password(user, "invalid", %{password: valid_user_password()})
 
       assert %{current_password: ["is not valid"]} = errors_on(changeset)
     end
@@ -409,9 +404,9 @@ defmodule Acme.AccountsTest do
   end
 
   describe "teams" do
-    alias Acme.Accounts.Team
-
     import Acme.AccountsFixtures
+
+    alias Acme.Accounts.Team
 
     @invalid_attrs %{name: nil}
 
@@ -464,9 +459,9 @@ defmodule Acme.AccountsTest do
   end
 
   describe "roles" do
-    alias Acme.Accounts.Role
-
     import Acme.AccountsFixtures
+
+    alias Acme.Accounts.Role
 
     @invalid_attrs %{name: nil}
 
@@ -523,9 +518,9 @@ defmodule Acme.AccountsTest do
   end
 
   describe "permissions" do
-    alias Acme.Accounts.Permission
-
     import Acme.AccountsFixtures
+
+    alias Acme.Accounts.Permission
 
     @invalid_attrs %{name: nil}
 
@@ -541,6 +536,7 @@ defmodule Acme.AccountsTest do
 
     test "create_permission/1 with valid data creates a permission" do
       team = team_fixture()
+
       valid_attrs = %{
         team_id: team.id,
         name: "some name"
@@ -558,8 +554,7 @@ defmodule Acme.AccountsTest do
       permission = permission_fixture()
       update_attrs = %{name: "some updated name"}
 
-      assert {:ok, %Permission{} = permission} =
-               Accounts.update_permission(permission, update_attrs)
+      assert {:ok, %Permission{} = permission} = Accounts.update_permission(permission, update_attrs)
 
       assert permission.name == "some updated name"
     end
@@ -583,9 +578,9 @@ defmodule Acme.AccountsTest do
   end
 
   describe "memberships" do
-    alias Acme.Accounts.Membership
-
     import Acme.AccountsFixtures
+
+    alias Acme.Accounts.Membership
 
     @invalid_attrs %{}
 
@@ -605,7 +600,7 @@ defmodule Acme.AccountsTest do
 
       valid_attrs = %{
         user_id: user.id,
-        team_id: team.id,
+        team_id: team.id
       }
 
       assert {:ok, %Membership{} = membership} = Accounts.create_membership(valid_attrs)
@@ -628,9 +623,9 @@ defmodule Acme.AccountsTest do
   end
 
   describe "membership_roles" do
-    alias Acme.Accounts.MembershipRole
-
     import Acme.AccountsFixtures
+
+    alias Acme.Accounts.MembershipRole
 
     @invalid_attrs %{}
 
@@ -650,11 +645,10 @@ defmodule Acme.AccountsTest do
 
       valid_attrs = %{
         membership_id: membership.id,
-        role_id: role.id,
+        role_id: role.id
       }
 
-      assert {:ok, %MembershipRole{} = membership_role} =
-               Accounts.create_membership_role(valid_attrs)
+      assert {:ok, %MembershipRole{} = membership_role} = Accounts.create_membership_role(valid_attrs)
     end
 
     test "create_membership_role/1 with invalid data returns error changeset" do
@@ -677,9 +671,9 @@ defmodule Acme.AccountsTest do
   end
 
   describe "role_permissions" do
-    alias Acme.Accounts.RolePermission
-
     import Acme.AccountsFixtures
+
+    alias Acme.Accounts.RolePermission
 
     @invalid_attrs %{}
 
@@ -696,14 +690,13 @@ defmodule Acme.AccountsTest do
     test "create_role_permission/1 with valid data creates a role_permission" do
       role = role_fixture()
       permission = permission_fixture()
-        
+
       valid_attrs = %{
         role_id: role.id,
-        permission_id: permission.id,
+        permission_id: permission.id
       }
 
-      assert {:ok, %RolePermission{} = role_permission} =
-               Accounts.create_role_permission(valid_attrs)
+      assert {:ok, %RolePermission{} = role_permission} = Accounts.create_role_permission(valid_attrs)
     end
 
     test "create_role_permission/1 with invalid data returns error changeset" do

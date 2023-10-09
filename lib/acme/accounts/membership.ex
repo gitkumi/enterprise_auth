@@ -1,11 +1,12 @@
 defmodule Acme.Accounts.Membership do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "memberships" do
-
     belongs_to :user, Acme.Accounts.User, type: :binary_id
     belongs_to :team, Acme.Accounts.Team, type: :binary_id
 

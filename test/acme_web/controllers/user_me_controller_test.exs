@@ -2,7 +2,8 @@ defmodule AcmeWeb.UserMeControllerTest do
   use AcmeWeb.ConnCase, async: true
 
   import Acme.AccountsFixtures
-  alias Acme.{Guardian}
+
+  alias Acme.Guardian
 
   setup do
     %{user: user_fixture()}

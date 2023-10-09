@@ -1,11 +1,12 @@
 defmodule Acme.Accounts.RolePermission do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "role_permissions" do
-
     belongs_to :role, Acme.Accounts.Role, type: :binary_id
     belongs_to :permission, Acme.Accounts.Permission, type: :binary_id
 

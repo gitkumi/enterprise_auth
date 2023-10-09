@@ -1,7 +1,8 @@
 defmodule Acme.AuthErrorHandler do
-  import Plug.Conn
-
+  @moduledoc false
   @behaviour Guardian.Plug.ErrorHandler
+
+  import Plug.Conn
 
   @impl Guardian.Plug.ErrorHandler
   def auth_error(conn, {type, _reason}, _opts) do

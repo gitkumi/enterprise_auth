@@ -28,7 +28,8 @@ defmodule AcmeWeb.PermissionController do
   def update(conn, %{"id" => id, "permission" => permission_params}) do
     permission = Accounts.get_permission!(id)
 
-    with {:ok, %Permission{} = permission} <- Accounts.update_permission(permission, permission_params) do
+    with {:ok, %Permission{} = permission} <-
+           Accounts.update_permission(permission, permission_params) do
       render(conn, :show, permission: permission)
     end
   end

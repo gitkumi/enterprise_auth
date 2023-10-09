@@ -1,4 +1,5 @@
 defmodule Acme.Guardian do
+  @moduledoc false
   use Guardian, otp_app: :acme
 
   alias Acme.Accounts
@@ -22,7 +23,7 @@ defmodule Acme.Guardian do
     # found in the `"sub"` key. In above `subject_for_token/2` we returned
     # the resource id so here we'll rely on that to look it up.
     resource = Accounts.get_user!(id)
-    {:ok,  resource}
+    {:ok, resource}
   end
 
   def resource_from_claims(_claims) do

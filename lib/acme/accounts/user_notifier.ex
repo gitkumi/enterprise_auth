@@ -1,4 +1,5 @@
 defmodule Acme.Accounts.UserNotifier do
+  @moduledoc false
   import Swoosh.Email
 
   alias Acme.Mailer

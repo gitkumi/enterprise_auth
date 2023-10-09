@@ -1,7 +1,7 @@
 defmodule AcmeWeb.UserConfirmationController do
   use AcmeWeb, :controller
 
-  alias Acme.{Accounts}
+  alias Acme.Accounts
 
   def create(conn, %{"user" => %{"email" => email}}) do
     if user = Accounts.get_user_by_email(email) do
@@ -15,19 +15,13 @@ defmodule AcmeWeb.UserConfirmationController do
       "If your email is in our system and it has not been confirmed yet, " <>
         "you will receive an email with instructions shortly."
 
-    conn
-    |> json(%{
-      message: message
-    })
+    json(conn, %{message: message})
   end
 
   def update(conn, %{"token" => token}) do
     case Accounts.confirm_user(token) do
       {:ok, _} ->
-        conn
-        |> json(%{
-          message: "User confirmed successfully."
-        })
+        json(conn, %{message: "User confirmed successfully."})
 
       :error ->
         # If there is a current user and the account was already confirmed,
@@ -36,10 +30,7 @@ defmodule AcmeWeb.UserConfirmationController do
         # a warning message.
         case conn.assigns do
           %{current_user: %{confirmed_at: confirmed_at}} when not is_nil(confirmed_at) ->
-            conn
-            |> json(%{
-              error: "User is already confirmed."
-            })
+            json(conn, %{error: "User is already confirmed."})
 
           %{} ->
             conn

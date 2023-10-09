@@ -67,4 +67,4 @@ config :swoosh, :api_client, false
 
 config :cors_plug,
   origin: ["*"],
-  max_age: 86400
+  max_age: 86_400

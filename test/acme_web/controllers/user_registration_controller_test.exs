@@ -13,7 +13,7 @@ defmodule AcmeWeb.UserRegistrationControllerTest do
         "email" => "new@test.com",
         "password" => "not secure password",
         "first_name" => "test",
-        "last_name" => "test",
+        "last_name" => "test"
       }
     }
 

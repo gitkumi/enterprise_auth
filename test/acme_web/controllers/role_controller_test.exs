@@ -3,8 +3,8 @@ defmodule AcmeWeb.RoleControllerTest do
 
   import Acme.AccountsFixtures
 
-  alias Acme.Guardian
   alias Acme.Accounts.Role
+  alias Acme.Guardian
 
   @update_attrs %{
     name: "some updated name"

@@ -12,7 +12,8 @@ defmodule AcmeWeb.MembershipRoleController do
   end
 
   def create(conn, %{"membership_role" => membership_role_params}) do
-    with {:ok, %MembershipRole{} = membership_role} <- Accounts.create_membership_role(membership_role_params) do
+    with {:ok, %MembershipRole{} = membership_role} <-
+           Accounts.create_membership_role(membership_role_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/membership_roles/#{membership_role}")

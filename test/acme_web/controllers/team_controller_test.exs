@@ -3,8 +3,8 @@ defmodule AcmeWeb.TeamControllerTest do
 
   import Acme.AccountsFixtures
 
-  alias Acme.Guardian
   alias Acme.Accounts.Team
+  alias Acme.Guardian
 
   @update_attrs %{
     name: "some updated name"
@@ -47,7 +47,7 @@ defmodule AcmeWeb.TeamControllerTest do
       assert %{
                "id" => ^id,
                "owner_id" => ^owner_id,
-               "name" => "some name",
+               "name" => "some name"
              } = json_response(conn, 200)["data"]
     end
 

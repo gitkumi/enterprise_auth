@@ -1,4 +1,5 @@
 defmodule Acme.AuthAccessPipeline do
+  @moduledoc false
   use Guardian.Plug.Pipeline, otp_app: :acme
 
   plug Guardian.Plug.VerifyHeader, claims: %{"typ" => "access"}

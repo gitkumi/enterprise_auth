@@ -3,8 +3,8 @@ defmodule AcmeWeb.MembershipRoleControllerTest do
 
   import Acme.AccountsFixtures
 
-  alias Acme.Guardian
   alias Acme.Accounts.MembershipRole
+  alias Acme.Guardian
 
   setup %{conn: conn} do
     user = user_fixture()
@@ -32,7 +32,7 @@ defmodule AcmeWeb.MembershipRoleControllerTest do
 
       params = %{
         membership_id: membership.id,
-        role_id: role.id,
+        role_id: role.id
       }
 
       conn = post(conn, ~p"/api/membership_roles", membership_role: params)

@@ -1,8 +1,9 @@
 defmodule AcmeWeb.UserRegistrationController do
   use AcmeWeb, :controller
 
+  alias Acme.Accounts
+  alias Acme.Guardian
   alias AcmeWeb.ChangesetJSON
-  alias Acme.{Accounts, Guardian}
 
   def create(conn, %{"user" => user_params}) do
     case Accounts.register_user(user_params) do
@@ -23,7 +24,7 @@ defmodule AcmeWeb.UserRegistrationController do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         errors = ChangesetJSON.error(%{changeset: changeset})
-    
+
         conn
         |> put_status(:bad_request)
         |> json(errors)

@@ -93,7 +93,7 @@ defmodule Acme.AccountsFixtures do
       attrs
       |> Enum.into(%{
         team_id: team.id,
-        user_id: user.id,
+        user_id: user.id
       })
       |> Acme.Accounts.create_membership()
 
@@ -111,7 +111,7 @@ defmodule Acme.AccountsFixtures do
       attrs
       |> Enum.into(%{
         membership_id: membership.id,
-        role_id: role.id,
+        role_id: role.id
       })
       |> Acme.Accounts.create_membership_role()
 
@@ -129,7 +129,7 @@ defmodule Acme.AccountsFixtures do
       attrs
       |> Enum.into(%{
         role_id: role.id,
-        permission_id: permission.id,
+        permission_id: permission.id
       })
       |> Acme.Accounts.create_role_permission()
 

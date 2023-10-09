@@ -3,8 +3,8 @@ defmodule AcmeWeb.PermissionControllerTest do
 
   import Acme.AccountsFixtures
 
-  alias Acme.Guardian
   alias Acme.Accounts.Permission
+  alias Acme.Guardian
 
   @update_attrs %{
     name: "some updated name"
@@ -37,7 +37,7 @@ defmodule AcmeWeb.PermissionControllerTest do
 
       params = %{
         team_id: team.id,
-        name: "some name",
+        name: "some name"
       }
 
       conn = post(conn, ~p"/api/permissions", permission: params)

@@ -46,7 +46,8 @@ defmodule Acme.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:guardian, "~> 2.0"},
       {:resend, "~> 0.2"},
-      {:cors_plug, "~> 3.0"}
+      {:cors_plug, "~> 3.0"},
+      {:styler, "~> 0.9", only: [:dev, :test], runtime: false}
     ]
   end
 

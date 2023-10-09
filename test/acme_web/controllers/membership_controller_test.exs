@@ -3,8 +3,8 @@ defmodule AcmeWeb.MembershipControllerTest do
 
   import Acme.AccountsFixtures
 
-  alias Acme.Guardian
   alias Acme.Accounts.Membership
+  alias Acme.Guardian
 
   setup %{conn: conn} do
     user = user_fixture()

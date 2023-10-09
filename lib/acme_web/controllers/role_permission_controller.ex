@@ -12,7 +12,8 @@ defmodule AcmeWeb.RolePermissionController do
   end
 
   def create(conn, %{"role_permission" => role_permission_params}) do
-    with {:ok, %RolePermission{} = role_permission} <- Accounts.create_role_permission(role_permission_params) do
+    with {:ok, %RolePermission{} = role_permission} <-
+           Accounts.create_role_permission(role_permission_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", ~p"/api/role_permissions/#{role_permission}")
