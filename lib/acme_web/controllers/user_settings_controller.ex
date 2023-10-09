@@ -16,12 +16,12 @@ defmodule AcmeWeb.UserSettingsController do
           fn token -> "~p/users/settings/confirm_email/#{token}" end
         )
 
-        json(conn, %{message: "A link to confirm your email change has been sent to the new address."})
+        json(conn, %{data: %{message: "A link to confirm your email change has been sent to the new address."}})
 
       {:error, changeset} ->
         errors = ChangesetJSON.error(%{changeset: changeset})
 
-        json(conn, errors)
+        json(conn, %{data: %{errors: errors}})
     end
   end
 
@@ -31,14 +31,14 @@ defmodule AcmeWeb.UserSettingsController do
 
     case Accounts.update_user_password(user, password, user_params) do
       {:ok, _user} ->
-        json(conn, %{message: "Password updated successfully."})
+        json(conn, %{data: %{message: "Password updated successfully."}})
 
       {:error, changeset} ->
         errors = ChangesetJSON.error(%{changeset: changeset})
 
         conn
         |> put_status(:bad_request)
-        |> json(errors)
+        |> json(%{data: %{errors: errors}})
     end
   end
 
@@ -47,13 +47,15 @@ defmodule AcmeWeb.UserSettingsController do
 
     case Accounts.update_user_email(user, token) do
       :ok ->
-        json(conn, %{message: "Email changed successfully."})
+        json(conn, %{data: %{message: "Email changed successfully."}})
 
       :error ->
         conn
         |> put_status(:bad_request)
         |> json(%{
-          error: "Email change link is invalid or it has expired."
+          data: %{
+            error: "Email change link is invalid or it has expired."
+          }
         })
     end
   end

@@ -15,7 +15,9 @@ defmodule AcmeWeb.UserLoginController do
       conn
       |> put_status(:bad_request)
       |> json(%{
-        error: "Invalid email or password."
+        data: %{
+          error: "Invalid email or password."
+        }
       })
     end
   end

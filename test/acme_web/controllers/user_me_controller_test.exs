@@ -11,7 +11,7 @@ defmodule AcmeWeb.UserMeControllerTest do
 
   test "unauthenticated", %{conn: conn} do
     conn = get(conn, ~p"/api/users/me")
-    assert json_response(conn, 401) == %{"message" => "unauthenticated"}
+    assert json_response(conn, 401) == %{"data" => %{"message" => "unauthenticated"}}
   end
 
   test "should decode user from token", %{conn: conn, user: user} do
@@ -22,8 +22,8 @@ defmodule AcmeWeb.UserMeControllerTest do
       |> put_req_header("authorization", "Bearer #{token}")
       |> get("/api/users/me")
 
-    assert json_response(conn, 200) == %{
-             "data" => %{
+    assert json_response(conn, 200) == %{"data" => %{
+             "user" => %{
                "id" => user.id,
                "email" => user.email,
                "confirmed_at" => user.confirmed_at,
@@ -31,5 +31,6 @@ defmodule AcmeWeb.UserMeControllerTest do
                "last_name" => user.last_name
              }
            }
+    }
   end
 end

@@ -17,25 +17,15 @@ defmodule AcmeWeb.UserRegistrationController do
 
         conn
         |> put_status(:created)
-        |> json(%{
-          user: json_user(user),
-          token: token
-        })
+        |> put_view(json: AcmeWeb.UserJSON)
+        |> render(:show, user: user, token: token)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         errors = ChangesetJSON.error(%{changeset: changeset})
 
         conn
         |> put_status(:bad_request)
-        |> json(errors)
+        |> json(%{data: %{errors: errors}})
     end
-  end
-
-  def json_user(user) do
-    %{
-      id: user.id,
-      email: user.email,
-      confirmed_at: user.confirmed_at
-    }
   end
 end

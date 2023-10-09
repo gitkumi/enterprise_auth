@@ -25,9 +25,9 @@ defmodule AcmeWeb.UserSettingsControllerTest do
       |> put_req_header("authorization", "Bearer #{token}")
       |> put(~p"/api/users/settings", payload)
 
-    assert json_response(conn, 200) == %{
+    assert json_response(conn, 200) == %{"data" => %{
              "message" => "Password updated successfully."
-           }
+           }}
   end
 
   test "it should not be able to update on wrong password", %{conn: conn, user: user} do
@@ -84,9 +84,9 @@ defmodule AcmeWeb.UserSettingsControllerTest do
       |> put_req_header("authorization", "Bearer #{token}")
       |> put(~p"/api/users/settings", payload)
 
-    assert json_response(conn, 200) == %{
+    assert json_response(conn, 200) == %{"data" => %{
              "message" => "A link to confirm your email change has been sent to the new address."
-           }
+           }}
 
     # TODO: Test if the link sent to email works properly.
   end

@@ -12,7 +12,9 @@ defmodule AcmeWeb.UserResetPasswordController do
       )
     end
 
-    json(conn, %{message: "If your email is in our system, you will receive instructions to reset your password shortly."})
+    json(conn, %{
+      data: %{message: "If your email is in our system, you will receive instructions to reset your password shortly."}
+    })
   end
 
   def update(conn, %{"user" => user_params}) do
@@ -23,18 +25,20 @@ defmodule AcmeWeb.UserResetPasswordController do
         conn
         |> put_status(:bad_request)
         |> json(%{
-          message: "Invalid token."
+          data: %{
+            message: "Invalid token."
+          }
         })
 
       user ->
         case Accounts.reset_user_password(user, user_params) do
           {:ok, _} ->
-            json(conn, %{message: "Password reset successfully."})
+            json(conn, %{data: %{message: "Password reset successfully."}})
 
           {:error, changeset} ->
             errors = ChangesetJSON.error(%{changeset: changeset})
 
-            json(conn, errors)
+            json(conn, %{data: %{errors: errors}})
         end
     end
   end

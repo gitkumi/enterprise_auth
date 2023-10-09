@@ -15,13 +15,13 @@ defmodule AcmeWeb.UserConfirmationController do
       "If your email is in our system and it has not been confirmed yet, " <>
         "you will receive an email with instructions shortly."
 
-    json(conn, %{message: message})
+    json(conn, %{data: %{message: message}})
   end
 
   def update(conn, %{"token" => token}) do
     case Accounts.confirm_user(token) do
       {:ok, _} ->
-        json(conn, %{message: "User confirmed successfully."})
+        json(conn, %{data: %{message: "User confirmed successfully."}})
 
       :error ->
         # If there is a current user and the account was already confirmed,
@@ -30,13 +30,15 @@ defmodule AcmeWeb.UserConfirmationController do
         # a warning message.
         case conn.assigns do
           %{current_user: %{confirmed_at: confirmed_at}} when not is_nil(confirmed_at) ->
-            json(conn, %{error: "User is already confirmed."})
+            json(conn, %{data: %{error: "User is already confirmed."}})
 
           %{} ->
             conn
             |> put_status(:bad_request)
             |> json(%{
-              error: "User confirmation link is invalid or it has expired."
+              data: %{
+                error: "User confirmation link is invalid or it has expired."
+              }
             })
         end
     end

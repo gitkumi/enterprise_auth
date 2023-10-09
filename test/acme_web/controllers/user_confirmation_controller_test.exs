@@ -16,10 +16,10 @@ defmodule AcmeWeb.UserConfirmationControllerTest do
 
     conn = post(conn, ~p"/api/users/confirm", payload)
 
-    assert json_response(conn, 200) == %{
+    assert json_response(conn, 200) == %{"data" => %{
              "message" =>
                "If your email is in our system and it has not been confirmed yet, you will receive an email with instructions shortly."
-           }
+           }}
 
     # TODO: Test if the link sent to email works properly.
   end
@@ -33,9 +33,9 @@ defmodule AcmeWeb.UserConfirmationControllerTest do
 
     conn = post(conn, ~p"/api/users/confirm", payload)
 
-    assert json_response(conn, 200) == %{
+    assert json_response(conn, 200) == %{"data" => %{
              "message" =>
                "If your email is in our system and it has not been confirmed yet, you will receive an email with instructions shortly."
-           }
+           }}
   end
 end
