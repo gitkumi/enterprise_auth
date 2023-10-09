@@ -9,6 +9,13 @@ defmodule AcmeWeb.UserJSON do
   end
 
   @doc """
+  Renders a single user with token.
+  """
+  def show(%{user: user, token: token}) do
+    %{data: %{user: data(user), token: token}}
+  end
+
+  @doc """
   Renders a single user.
   """
   def show(%{user: user}) do

@@ -16,7 +16,11 @@ defmodule AcmeWeb.UserLoginControllerTest do
     }
 
     conn = post(conn, ~p"/api/users/log_in", payload)
-    assert json_response(conn, 200)
+    response = json_response(conn, 200)
+
+    assert %{"data" => %{"user" => user_data, "token" => token}} = response
+    assert user_data["email"] == user.email
+    assert is_binary(token)
   end
 
   test "it should not login if password is wrong", %{conn: conn, user: user} do
