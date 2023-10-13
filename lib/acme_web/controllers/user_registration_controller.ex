@@ -5,6 +5,8 @@ defmodule AcmeWeb.UserRegistrationController do
   alias Acme.Guardian
   alias AcmeWeb.ChangesetJSON
 
+  action_fallback AcmeWeb.FallbackController
+
   def create(conn, %{"user" => user_params}) do
     case Accounts.register_user(user_params) do
       {:ok, user} ->

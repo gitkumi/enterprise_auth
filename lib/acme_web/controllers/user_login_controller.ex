@@ -4,6 +4,8 @@ defmodule AcmeWeb.UserLoginController do
   alias Acme.Accounts
   alias Acme.Guardian
 
+  action_fallback AcmeWeb.FallbackController
+
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
     if user = Accounts.get_user_by_email_and_password(email, password) do
       {:ok, token, _claims} = Guardian.encode_and_sign(user)

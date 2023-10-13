@@ -4,6 +4,8 @@ defmodule AcmeWeb.UserSettingsController do
   alias Acme.Accounts
   alias AcmeWeb.ChangesetJSON
 
+  action_fallback AcmeWeb.FallbackController
+
   def update(conn, %{"action" => "update_email"} = params) do
     %{"current_password" => password, "user" => user_params} = params
     user = conn.private.guardian_default_resource

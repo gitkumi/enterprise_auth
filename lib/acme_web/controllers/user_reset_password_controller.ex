@@ -4,6 +4,8 @@ defmodule AcmeWeb.UserResetPasswordController do
   alias Acme.Accounts
   alias AcmeWeb.ChangesetJSON
 
+  action_fallback AcmeWeb.FallbackController
+
   def create(conn, %{"user" => %{"email" => email}}) do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_user_reset_password_instructions(
