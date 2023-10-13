@@ -38,7 +38,7 @@ defmodule AcmeWeb.UserSettingsController do
 
         conn
         |> put_status(:bad_request)
-        |> json(%{data: %{errors: errors}})
+        |> json(%{data: errors})
     end
   end
 
