@@ -1,4 +1,4 @@
 # enterprise_auth
 
-Authentication json API for Elixir/Phoenix RBAC and Multitenancy support.  
+Elixir/Phoenix Authentication JSON API with RBAC and multitenancy support.  
 If you need something simpler, use [basic_auth](https://github.com/gitkumi/basic_auth)
