@@ -7,7 +7,6 @@ defmodule AcmeWeb.Router do
   end
 
   pipeline :auth do
-    plug :accepts, ["json"]
     plug Acme.AuthAccessPipeline
   end
 

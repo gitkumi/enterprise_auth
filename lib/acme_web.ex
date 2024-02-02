@@ -17,7 +17,7 @@ defmodule AcmeWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w()
 
   def router do
     quote do
@@ -39,8 +39,7 @@ defmodule AcmeWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        formats: [:html, :json],
-        layouts: [html: AcmeWeb.Layouts]
+        formats: [:json]
 
       import Plug.Conn
 
